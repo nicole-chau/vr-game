@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour{
         yield return new WaitForSeconds(5f);
 
         if (IsFull()) {
-            Destroy();
+            Destroy(this);
         }
     }
 }
