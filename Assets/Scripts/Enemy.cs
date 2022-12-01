@@ -38,6 +38,10 @@ public class Enemy : MonoBehaviour{
         Collider collider = collision.collider;
         if (collider.CompareTag("Food")) {
             hunger-=2f;
+            GameObject ob = collision.gameObject;
+            //collision.gameObject.GetComponent<Interactable>().colliders.Clear();
+            ob.SetActive(false);
+            //Destroy(collision.gameObject);
             Debug.Log(hunger);
         }
     }
