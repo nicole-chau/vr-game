@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour{
     public Transform player;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 1f;
     public float hunger = 10f;
 
     private Rigidbody rb;
@@ -33,8 +33,13 @@ public class Enemy : MonoBehaviour{
         rb.MovePosition(transform.position + (direction * moveSpeed * Time.deltaTime));
     }
 
-    void Feed() {
-        hunger -= 2f;
+    void OnCollisionEnter(Collision collision) {
+        Debug.Log("collision enter");
+        Collider collider = collision.collider;
+        if (collider.CompareTag("Food")) {
+            hunger-=2f;
+            Debug.Log(hunger);
+        }
     }
 
     bool IsFull() {
