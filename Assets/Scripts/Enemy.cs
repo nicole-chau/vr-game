@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour{
     public Transform player;
     public float moveSpeed = 1f;
-    public float hunger = 10f;
+    public float hunger = 1f;
 
     private Rigidbody rb;
     private Vector3 direction;
@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour{
         Debug.Log("collision enter");
         Collider collider = collision.collider;
         if (collider.CompareTag("Food")) {
-            hunger-=2f;
+            hunger-=1f;
             GameObject ob = collision.gameObject;
             //collision.gameObject.GetComponent<Interactable>().colliders.Clear();
             ob.SetActive(false);

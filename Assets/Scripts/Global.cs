@@ -15,7 +15,7 @@ public class Global : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        health = 10;
+        health = 5;
         foodCount = 40;
         enemyCount = 5;
 
