@@ -10,9 +10,13 @@ public class Enemy : MonoBehaviour{
     private Rigidbody rb;
     private Vector3 direction;
 
+    public bool hitPlayer;
+
     // Start is called before the first frame update
     void Start() {
         rb = this.GetComponent<Rigidbody>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        hitPlayer = false;
 
         StartCoroutine(Disappear());
     }
@@ -20,6 +24,18 @@ public class Enemy : MonoBehaviour{
     // Update is called once per frame
     void Update() {
         direction = player.position - transform.position;
+
+        if (Mathf.Abs(direction.x) <= 1 && Mathf.Abs(direction.z) <= 1) {
+            if (!hitPlayer) {
+                hitPlayer = true;
+                Debug.Log("hit player");
+                GameObject globalObj = GameObject.Find("GlobalObject");
+                Global g = globalObj.GetComponent<Global>();
+                g.health--;
+                Debug.Log(g.health);
+            }
+        }
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         rb.rotation = Quaternion.AngleAxis(angle, Vector3.up);
         direction.Normalize();
@@ -27,6 +43,8 @@ public class Enemy : MonoBehaviour{
         if (IsFull()) {
             direction = -direction;
         }
+
+
     }
 
     void FixedUpdate() {
@@ -43,7 +61,15 @@ public class Enemy : MonoBehaviour{
             ob.SetActive(false);
             //Destroy(collision.gameObject);
             Debug.Log(hunger);
-        }
+        } 
+        
+        // else if (collider.CompareTag("Player")) {
+        //     Debug.Log("hit player");
+        //     GameObject globalObj = GameObject.Find("GlobalObject");
+        //     Global g = globalObj.GetComponent<Global>();
+        //     g.health--;
+        //     Debug.Log(g.health);
+        // }
     }
 
     bool IsFull() {
