@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour{
     private Rigidbody rb;
     private Vector3 direction;
 
+    public AudioSource footstep;
+
     public bool hitPlayer;
 
     // Start is called before the first frame update
@@ -19,6 +21,13 @@ public class Enemy : MonoBehaviour{
         hitPlayer = false;
 
         StartCoroutine(Disappear());
+
+        footstep = GetComponent<AudioSource>();
+        footstep.loop = true;
+        footstep.Play();
+
+        // AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
+        
     }
 
     // Update is called once per frame
