@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour{
     void OnCollisionEnter(Collision collision) {
         Debug.Log("collision enter");
         Collider collider = collision.collider;
-        if (collider.CompareTag("Food")) {
+        if (collider.CompareTag("Food") && hunger > 0) {
             hunger-=1f;
             GameObject ob = collision.gameObject;
             //collision.gameObject.GetComponent<Interactable>().colliders.Clear();
@@ -82,14 +82,22 @@ public class Enemy : MonoBehaviour{
     }
 
     bool IsFull() {
-        return hunger == 0;
+        return hunger <= 0;
     }
 
     IEnumerator Disappear() {
-        yield return new WaitForSeconds(5f);
+        Debug.Log("coroutine");
 
-        if (IsFull()) {
-            Destroy(this);
+        while(true) {
+            yield return new WaitForSeconds(5f);
+
+            if (IsFull()) {
+                Debug.Log("hungry again");
+                hunger = 1;
+            }
+
+            yield return new WaitForSeconds(8f);
+
         }
     }
 }

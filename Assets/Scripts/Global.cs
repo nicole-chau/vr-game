@@ -16,7 +16,7 @@ public class Global : MonoBehaviour
     void Start()
     {
         health = 5;
-        foodCount = 40;
+        foodCount = 50;
         enemyCount = 5;
 
         // Vector3 playerPos = player.transform.position;
@@ -26,14 +26,14 @@ public class Global : MonoBehaviour
         }
 
         for (int i = 0; i < enemyCount; ++i) {
-            Instantiate(enemy, RandomPosition(), Quaternion.identity);
+           // Instantiate(enemy, RandomPosition(), Quaternion.identity);
         }       
     }
 
     Vector3 RandomPosition() {
-        int x = Random.Range(-32, 53);
-        int z = Random.Range(17, 55);
-        return new Vector3(x, 0f, z);
+        int x = Random.Range(0, 37*2);
+        int z = Random.Range(0, 37*2);
+        return new Vector3(x, 5f, z);
     }
 
     // Update is called once per frame
