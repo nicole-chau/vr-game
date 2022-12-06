@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour{
             if (IsFull()) {
                 Debug.Log("hungry again");
                 hunger = 1;
+                hitPlayer = false;
             }
 
             yield return new WaitForSeconds(8f);
