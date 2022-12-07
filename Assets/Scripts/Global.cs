@@ -11,12 +11,13 @@ public class Global : MonoBehaviour
     public GameObject enemy;
     public GameObject food;
     public GameObject player;
+    public GameObject teleportPlane;
 
     // Start is called before the first frame update
     void Start()
     {
         health = 5;
-        foodCount = 50;
+        foodCount = 100;
         enemyCount = 5;
 
         // Vector3 playerPos = player.transform.position;
@@ -26,13 +27,27 @@ public class Global : MonoBehaviour
         }
 
         for (int i = 0; i < enemyCount; ++i) {
-           // Instantiate(enemy, RandomPosition(), Quaternion.identity);
+            //Instantiate(enemy, RandomPosition(), Quaternion.identity);
+        }
+
+        // spawn teleport points
+        float xStart = -30;
+        float zStart = -30;
+        float z = zStart;
+        float x;
+        for (int row = 0; row < 12; ++row) {
+            x = xStart;
+            for (int col = 0; col < 10; ++col) {
+                Instantiate(teleportPlane, new Vector3(x, 0.1f, z), Quaternion.identity);
+                x += 12;
+            }
+            z += 10;
         }       
     }
 
     Vector3 RandomPosition() {
-        int x = Random.Range(0, 37*2);
-        int z = Random.Range(0, 37*2);
+        int x = Random.Range(-37, 37*3);
+        int z = Random.Range(-37, 37*3);
         return new Vector3(x, 5f, z);
     }
 

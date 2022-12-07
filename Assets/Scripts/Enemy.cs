@@ -14,17 +14,21 @@ public class Enemy : MonoBehaviour{
 
     public bool hitPlayer;
 
+    public float timer;
+    public float hungerPeriod;
+
     // Start is called before the first frame update
     void Start() {
         rb = this.GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         hitPlayer = false;
 
-        StartCoroutine(Disappear());
-
         footstep = GetComponent<AudioSource>();
         footstep.loop = true;
         footstep.Play();
+
+        timer = 0;
+        hungerPeriod = 5f;
 
         // AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
         
@@ -33,26 +37,39 @@ public class Enemy : MonoBehaviour{
     // Update is called once per frame
     void Update() {
         direction = player.position - transform.position;
+        if (!IsFull()) {
 
-        if (Mathf.Abs(direction.x) <= 1 && Mathf.Abs(direction.z) <= 1) {
-            if (!hitPlayer) {
-                hitPlayer = true;
-                Debug.Log("hit player");
-                GameObject globalObj = GameObject.Find("GlobalObject");
-                Global g = globalObj.GetComponent<Global>();
-                g.health--;
-                Debug.Log(g.health);
+            // chase player
+            direction = player.position - transform.position;
+
+            if (Mathf.Abs(direction.x) <= 1 && Mathf.Abs(direction.z) <= 1) {
+                if (!hitPlayer) {
+                    hitPlayer = true;
+                    Debug.Log("hit player");
+                    GameObject globalObj = GameObject.Find("GlobalObject");
+                    Global g = globalObj.GetComponent<Global>();
+                    g.health--;
+                    Debug.Log(g.health);
+                }
+            }
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            rb.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+            direction.Normalize();
+
+        } else {
+            direction.Normalize();
+            direction = -direction;
+
+            timer += Time.deltaTime;
+            if (timer > hungerPeriod) {
+                timer = 0;
+                Debug.Log("hungry again");
+                hunger = 1;
+                hitPlayer = false;
             }
         }
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        rb.rotation = Quaternion.AngleAxis(angle, Vector3.up);
-        direction.Normalize();
-
-        if (IsFull()) {
-            direction = -direction;
-        }
-
+        
 
     }
 
@@ -83,22 +100,5 @@ public class Enemy : MonoBehaviour{
 
     bool IsFull() {
         return hunger <= 0;
-    }
-
-    IEnumerator Disappear() {
-        Debug.Log("coroutine");
-
-        while(true) {
-            yield return new WaitForSeconds(5f);
-
-            if (IsFull()) {
-                Debug.Log("hungry again");
-                hunger = 1;
-                hitPlayer = false;
-            }
-
-            yield return new WaitForSeconds(8f);
-
-        }
     }
 }
