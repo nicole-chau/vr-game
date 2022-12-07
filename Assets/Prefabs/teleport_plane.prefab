@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 885434641181183657}
   - component: {fileID: 885434641181183654}
   - component: {fileID: 8069187563436664271}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: teleport_plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -18,7 +18,7 @@ public class Global : MonoBehaviour
     {
         health = 5;
         foodCount = 100;
-        enemyCount = 5;
+        enemyCount = 3;
 
         // Vector3 playerPos = player.transform.position;
 

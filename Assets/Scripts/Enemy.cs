@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour{
         footstep.Play();
 
         timer = 0;
-        hungerPeriod = 5f;
+        hungerPeriod = Random.Range(10,15);
 
         // AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
         
@@ -40,8 +40,10 @@ public class Enemy : MonoBehaviour{
         if (!IsFull()) {
 
             // chase player
-            direction = player.position - transform.position;
+            //transform.LookAt(player);
+            //direction = player.position - transform.position;
 
+            // attack player
             if (Mathf.Abs(direction.x) <= 1 && Mathf.Abs(direction.z) <= 1) {
                 if (!hitPlayer) {
                     hitPlayer = true;
