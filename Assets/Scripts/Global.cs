@@ -35,13 +35,13 @@ public class Global : MonoBehaviour
         float zStart = -30;
         float z = zStart;
         float x;
-        for (int row = 0; row < 12; ++row) {
+        for (int row = 0; row < 11; ++row) {
             x = xStart;
             for (int col = 0; col < 10; ++col) {
-                Instantiate(teleportPlane, new Vector3(x, 0.1f, z), Quaternion.identity);
-                x += 12;
+                Instantiate(teleportPlane, new Vector3(x, 0.01f, z), Quaternion.identity);
+                x += 15;
             }
-            z += 10;
+            z += 13;
         }       
     }
 
