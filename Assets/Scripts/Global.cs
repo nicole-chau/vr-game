@@ -38,7 +38,7 @@ public class Global : MonoBehaviour
         for (int row = 0; row < 11; ++row) {
             x = xStart;
             for (int col = 0; col < 10; ++col) {
-                Instantiate(teleportPlane, new Vector3(x, 0.01f, z), Quaternion.identity);
+                //Instantiate(teleportPlane, new Vector3(x, 0.01f, z), Quaternion.identity);
                 x += 15;
             }
             z += 13;

@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour{
         timer = 0;
         hungerPeriod = Random.Range(10,15);
 
-        // AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
+        //AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
         
     }
 
