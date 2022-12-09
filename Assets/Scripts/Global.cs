@@ -18,7 +18,7 @@ public class Global : MonoBehaviour
     {
         health = 10;
         foodCount = 100;
-        enemyCount = 3;
+        enemyCount = 8;
 
         // Vector3 playerPos = player.transform.position;
 
@@ -27,7 +27,7 @@ public class Global : MonoBehaviour
         }
 
         for (int i = 0; i < enemyCount; ++i) {
-            //Instantiate(enemy, RandomPosition(), Quaternion.identity);
+            Instantiate(enemy, RandomPosition(), Quaternion.identity);
         }
 
         // spawn teleport points

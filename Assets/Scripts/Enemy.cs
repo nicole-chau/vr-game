@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour{
     public Transform player;
     public float moveSpeed = 1f;
-    public float hunger = 1f;
+    public float hunger;
 
     private Rigidbody rb;
     private Vector3 direction;
@@ -15,10 +15,12 @@ public class Enemy : MonoBehaviour{
     public bool hitPlayer;
 
     public float timer;
-    public float hungerPeriod;
+    public float fullPeriod;
 
     // Start is called before the first frame update
     void Start() {
+        hunger = 0f;
+
         rb = this.GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         hitPlayer = false;
@@ -28,7 +30,7 @@ public class Enemy : MonoBehaviour{
         footstep.Play();
 
         timer = 0;
-        hungerPeriod = Random.Range(10,15);
+        fullPeriod = Random.Range(20, 60);
 
         //AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
         
@@ -64,10 +66,10 @@ public class Enemy : MonoBehaviour{
             direction = -direction;
 
             timer += Time.deltaTime;
-            if (timer > hungerPeriod) {
+            if (timer > fullPeriod) {
                 timer = 0;
                 Debug.Log("hungry again");
-                hunger = 1;
+                hunger = Random.Range(1,3);
                 hitPlayer = false;
             }
         }
