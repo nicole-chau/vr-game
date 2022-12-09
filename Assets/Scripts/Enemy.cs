@@ -82,8 +82,13 @@ public class Enemy : MonoBehaviour{
     void OnCollisionEnter(Collision collision) {
         Debug.Log("collision enter");
         Collider collider = collision.collider;
-        if (collider.CompareTag("Food") && hunger > 0) {
-            hunger-=1f;
+        if ((collider.CompareTag("Food") || collider.CompareTag("FoodHalf")) && hunger > 0) {
+            if (collider.CompareTag("Food")) {
+                hunger-=1f;
+            } else if (collider.CompareTag("FoodHalf")) {
+                hunger-=.5f;
+            }
+            
             GameObject ob = collision.gameObject;
             //collision.gameObject.GetComponent<Interactable>().colliders.Clear();
             ob.SetActive(false);
