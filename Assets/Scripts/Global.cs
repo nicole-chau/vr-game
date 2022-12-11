@@ -31,18 +31,18 @@ public class Global : MonoBehaviour
         }
 
         // spawn teleport points
-        float xStart = -30;
-        float zStart = -30;
-        float z = zStart;
-        float x;
-        for (int row = 0; row < 11; ++row) {
-            x = xStart;
-            for (int col = 0; col < 10; ++col) {
+        // float xStart = -30;
+        // float zStart = -30;
+        // float z = zStart;
+        // float x;
+        // for (int row = 0; row < 11; ++row) {
+        //     x = xStart;
+        //     for (int col = 0; col < 10; ++col) {
                 //Instantiate(teleportPlane, new Vector3(x, 0.01f, z), Quaternion.identity);
-                x += 15;
-            }
-            z += 13;
-        }       
+        //         x += 15;
+        //     }
+        //     z += 13;
+        // }       
     }
 
     Vector3 RandomPosition() {

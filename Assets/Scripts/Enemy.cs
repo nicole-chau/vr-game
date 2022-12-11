@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour{
     public Transform player;
     public float moveSpeed = 1f;
     public float hunger;
+    public float maxHunger;
 
     private Rigidbody rb;
     private Vector3 direction;
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start() {
+        maxHunger = Random.Range(1,3);
         hunger = 0f;
 
         rb = this.GetComponent<Rigidbody>();
@@ -69,7 +71,7 @@ public class Enemy : MonoBehaviour{
             if (timer > fullPeriod) {
                 timer = 0;
                 Debug.Log("hungry again");
-                hunger = Random.Range(1,3);
+                hunger = maxHunger;
                 hitPlayer = false;
             }
         }
@@ -92,19 +94,9 @@ public class Enemy : MonoBehaviour{
             }
             
             GameObject ob = collision.gameObject;
-            //collision.gameObject.GetComponent<Interactable>().colliders.Clear();
             ob.SetActive(false);
-            //Destroy(collision.gameObject);
             Debug.Log(hunger);
         } 
-        
-        // else if (collider.CompareTag("Player")) {
-        //     Debug.Log("hit player");
-        //     GameObject globalObj = GameObject.Find("GlobalObject");
-        //     Global g = globalObj.GetComponent<Global>();
-        //     g.health--;
-        //     Debug.Log(g.health);
-        // }
     }
 
     bool IsFull() {
