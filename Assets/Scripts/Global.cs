@@ -54,6 +54,7 @@ public class Global : MonoBehaviour
     {
         if (health == 0) {
             Debug.Log("game over");
+            Application.LoadLevel("GameOver"); 
         }
 
         // spawn more food
