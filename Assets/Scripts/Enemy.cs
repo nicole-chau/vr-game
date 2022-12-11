@@ -18,8 +18,13 @@ public class Enemy : MonoBehaviour{
     public float timer;
     public float fullPeriod;
 
+    Global g;
+
     // Start is called before the first frame update
     void Start() {
+        GameObject globalObj = GameObject.Find("GlobalObject");
+        g = globalObj.GetComponent<Global>();
+
         maxHunger = Random.Range(1,3);
         hunger = 0f;
 
@@ -52,8 +57,7 @@ public class Enemy : MonoBehaviour{
                 if (!hitPlayer) {
                     hitPlayer = true;
                     Debug.Log("hit player");
-                    GameObject globalObj = GameObject.Find("GlobalObject");
-                    Global g = globalObj.GetComponent<Global>();
+                    
                     g.health--;
                     Debug.Log(g.health);
                 }
@@ -64,9 +68,11 @@ public class Enemy : MonoBehaviour{
             direction.Normalize();
 
         } else {
+            // run away from player
             direction.Normalize();
             direction = -direction;
 
+            // become hunger again after a random period of time
             timer += Time.deltaTime;
             if (timer > fullPeriod) {
                 timer = 0;
@@ -89,8 +95,10 @@ public class Enemy : MonoBehaviour{
         if ((collider.CompareTag("Food") || collider.CompareTag("FoodHalf")) && hunger > 0) {
             if (collider.CompareTag("Food")) {
                 hunger-=1f;
+                g.foodCount--;
             } else if (collider.CompareTag("FoodHalf")) {
                 hunger-=.5f;
+                g.foodCount-=0.5f;
             }
             
             GameObject ob = collision.gameObject;

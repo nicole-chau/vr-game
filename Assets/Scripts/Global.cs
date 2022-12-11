@@ -5,7 +5,7 @@ using UnityEngine;
 public class Global : MonoBehaviour
 {
     public int health;
-    public int foodCount;
+    public float foodCount;
     public int enemyCount;
 
     public GameObject enemy;
@@ -17,10 +17,8 @@ public class Global : MonoBehaviour
     void Start()
     {
         health = 10;
-        foodCount = 100;
+        foodCount = 60f;
         enemyCount = 8;
-
-        // Vector3 playerPos = player.transform.position;
 
         for(int i = 0; i < foodCount; ++i) {
             Instantiate(food, RandomPosition(), Quaternion.identity);
@@ -56,6 +54,13 @@ public class Global : MonoBehaviour
     {
         if (health == 0) {
             Debug.Log("game over");
+        }
+
+        // spawn more food
+        if (foodCount < 50) {
+            for (int i = 0; i < 10; ++i) {
+                Instantiate(food, RandomPosition(), Quaternion.identity);
+            }
         }
     }
 }
