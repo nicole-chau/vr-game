@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour{
     public float timer;
     public float fullPeriod;
 
+    float attackPeriod;
+
     Global g;
 
     // Start is called before the first frame update
@@ -39,13 +41,15 @@ public class Enemy : MonoBehaviour{
         timer = 0;
         fullPeriod = Random.Range(20, 60);
 
-        //AudioSource.PlayClipAtPoint(this.footstep, this.gameObject.transform.position);
+        // attack again every 3 seconds
+        attackPeriod = 3f;
         
     }
 
     // Update is called once per frame
     void Update() {
         direction = player.position - transform.position;
+        timer += Time.deltaTime;
         if (!IsFull()) {
 
             // chase player
@@ -60,6 +64,9 @@ public class Enemy : MonoBehaviour{
                     
                     g.health--;
                     Debug.Log(g.health);
+                } else if (timer > attackPeriod) {
+                    // attack player again after 3 seconds
+                    hitPlayer = false;
                 }
             }
 
@@ -73,7 +80,6 @@ public class Enemy : MonoBehaviour{
             direction = -direction;
 
             // become hunger again after a random period of time
-            timer += Time.deltaTime;
             if (timer > fullPeriod) {
                 timer = 0;
                 Debug.Log("hungry again");
