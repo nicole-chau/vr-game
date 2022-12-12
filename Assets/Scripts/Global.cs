@@ -25,7 +25,7 @@ public class Global : MonoBehaviour
         }
 
         for (int i = 0; i < enemyCount; ++i) {
-            Instantiate(enemy, RandomPosition(), Quaternion.identity);
+            Instantiate(enemy, RandomPosition(), Quaternion.Euler(90f, 0f, 0f));
         }
 
         // spawn teleport points

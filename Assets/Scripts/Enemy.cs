@@ -16,9 +16,12 @@ public class Enemy : MonoBehaviour{
     public bool hitPlayer;
 
     public float timer;
+    public float attack_timer;
+    public float wander_timer;
     public float fullPeriod;
 
     float attackPeriod;
+    float wanderPeriod; // the time till enemy changes direction
 
     Global g;
 
@@ -27,7 +30,7 @@ public class Enemy : MonoBehaviour{
         GameObject globalObj = GameObject.Find("GlobalObject");
         g = globalObj.GetComponent<Global>();
 
-        maxHunger = Random.Range(1,3);
+        maxHunger = Random.Range(1,2);
         hunger = 0f;
 
         rb = this.GetComponent<Rigidbody>();
@@ -39,18 +42,24 @@ public class Enemy : MonoBehaviour{
         footstep.Play();
 
         timer = 0;
-        fullPeriod = Random.Range(20, 60);
+        attack_timer = 0;
+        wander_timer = 0;
+        fullPeriod = Random.Range(20, 300);
 
         // attack again every 3 seconds
         attackPeriod = 3f;
+        wanderPeriod = (float)Random.Range(5, 10);
         
     }
 
     // Update is called once per frame
     void Update() {
-        direction = player.position - transform.position;
+        
         timer += Time.deltaTime;
+        attack_timer += Time.deltaTime;
+        wander_timer += Time.deltaTime;
         if (!IsFull()) {
+            direction = player.position - transform.position;
 
             // chase player
             //transform.LookAt(player);
@@ -64,8 +73,9 @@ public class Enemy : MonoBehaviour{
                     
                     g.health--;
                     Debug.Log(g.health);
-                } else if (timer > attackPeriod) {
+                } else if (attack_timer > attackPeriod) {
                     // attack player again after 3 seconds
+                    attack_timer = 0;
                     hitPlayer = false;
                 }
             }
@@ -76,8 +86,18 @@ public class Enemy : MonoBehaviour{
 
         } else {
             // run away from player
-            direction.Normalize();
-            direction = -direction;
+            if (wander_timer > wanderPeriod) {
+                direction = new Vector3((float)Random.Range(-10,10), (float)0.0, (float)Random.Range(-10,10));
+                direction.Normalize();
+                wander_timer = 0;
+                if (transform.position.x > 33 || transform.position.x < -33 || transform.position.z > 33 || transform.position.z < -33) {
+                    direction = -direction;
+                }
+                // if (transform.position.z > 33 || transform.position.z < -33) {
+                //     direction.z = -direction.z;
+                // }
+            }
+            
 
             // become hunger again after a random period of time
             if (timer > fullPeriod) {
