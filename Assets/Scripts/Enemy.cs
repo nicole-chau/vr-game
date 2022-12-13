@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour{
         if (screenFlash.GetComponent<Image>().color.a > 0) {
             var color = screenFlash.GetComponent<Image>().color;
             Debug.Log(color);
-            color.a -= 0.01f;
+            color.a -= 0.005f;
             screenFlash.GetComponent<Image>().color = color;
         }
 
