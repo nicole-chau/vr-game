@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour{
     public Transform player;
@@ -18,10 +19,13 @@ public class Enemy : MonoBehaviour{
     public float timer;
     public float attack_timer;
     public float wander_timer;
+    public float eating_timer;
     public float fullPeriod;
 
     float attackPeriod;
     float wanderPeriod; // the time till enemy changes direction
+
+    GameObject screenFlash;
 
     Global g;
 
@@ -29,6 +33,8 @@ public class Enemy : MonoBehaviour{
     void Start() {
         GameObject globalObj = GameObject.Find("GlobalObject");
         g = globalObj.GetComponent<Global>();
+
+        screenFlash = GameObject.Find("Image");
 
         maxHunger = Random.Range(1,2);
         hunger = 0f;
@@ -44,13 +50,14 @@ public class Enemy : MonoBehaviour{
         timer = 0;
         attack_timer = 0;
         wander_timer = 0;
-        fullPeriod = Random.Range(20, 300);
+
+        fullPeriod = Random.Range(10, 150);
 
         // attack again every 3 seconds
         attackPeriod = 3f;
         wanderPeriod = (float)Random.Range(5, 10);
-        
     }
+
 
     // Update is called once per frame
     void Update() {
@@ -58,6 +65,14 @@ public class Enemy : MonoBehaviour{
         timer += Time.deltaTime;
         attack_timer += Time.deltaTime;
         wander_timer += Time.deltaTime;
+
+        if (screenFlash.GetComponent<Image>().color.a > 0) {
+            var color = screenFlash.GetComponent<Image>().color;
+            Debug.Log(color);
+            color.a -= 0.01f;
+            screenFlash.GetComponent<Image>().color = color;
+        }
+
         if (!IsFull()) {
             direction = player.position - transform.position;
 
@@ -68,11 +83,13 @@ public class Enemy : MonoBehaviour{
             // attack player
             if (Mathf.Abs(direction.x) <= 1 && Mathf.Abs(direction.z) <= 1) {
                 if (!hitPlayer) {
-                    hitPlayer = true;
-                    Debug.Log("hit player");
-                    
+                    hitPlayer = true;                    
                     g.health--;
-                    Debug.Log(g.health);
+                    
+                    // screen flash
+                    var color = screenFlash.GetComponent<Image>().color;
+                    color.a = 0.8f;
+                    screenFlash.GetComponent<Image>().color = color;
                 } else if (attack_timer > attackPeriod) {
                     // attack player again after 3 seconds
                     attack_timer = 0;
@@ -90,9 +107,9 @@ public class Enemy : MonoBehaviour{
                 direction = new Vector3((float)Random.Range(-10,10), (float)0.0, (float)Random.Range(-10,10));
                 direction.Normalize();
                 wander_timer = 0;
-                if (transform.position.x > 33 || transform.position.x < -33 || transform.position.z > 33 || transform.position.z < -33) {
-                    direction = -direction;
-                }
+                // if (transform.position.x > 33 || transform.position.x < -33 || transform.position.z > 33 || transform.position.z < -33) {
+                //     direction = -direction;
+                // }
                 // if (transform.position.z > 33 || transform.position.z < -33) {
                 //     direction.z = -direction.z;
                 // }
@@ -119,6 +136,7 @@ public class Enemy : MonoBehaviour{
         Debug.Log("collision enter");
         Collider collider = collision.collider;
         if ((collider.CompareTag("Food") || collider.CompareTag("FoodHalf")) && hunger > 0) {
+            attack_timer = 0;
             if (collider.CompareTag("Food")) {
                 hunger-=1f;
                 g.foodCount--;

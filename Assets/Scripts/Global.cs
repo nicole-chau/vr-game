@@ -12,6 +12,7 @@ public class Global : MonoBehaviour
     public GameObject food;
     public GameObject player;
     public GameObject teleportPlane;
+    public GameObject fence;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class Global : MonoBehaviour
         }
 
         for (int i = 0; i < enemyCount; ++i) {
-            Instantiate(enemy, RandomPosition(), Quaternion.Euler(90f, 0f, 0f));
+            Instantiate(enemy, RandomPosition(), Quaternion.Euler(0f, 0f, 0f));
         }
 
         // spawn teleport points
@@ -40,12 +41,21 @@ public class Global : MonoBehaviour
         //         x += 15;
         //     }
         //     z += 13;
-        // }       
+        // }
+
+        float offset = 0;
+        for (int i = 0; i < 38; ++i) {
+            Instantiate(fence, new Vector3(-20f + offset, 0.01f, -25), Quaternion.Euler(0f, 0f, 0f));
+            Instantiate(fence, new Vector3(-20f + offset, 0.01f, 100), Quaternion.Euler(0f, 0f, 0f));
+            Instantiate(fence, new Vector3(-20f, 0.01f, -25 + offset), Quaternion.Euler(0f, 90f, 0f));
+            Instantiate(fence, new Vector3(100f, 0.01f, -25 + offset), Quaternion.Euler(0f, 90f, 0f));
+            offset += 3.5f;
+        }       
     }
 
     Vector3 RandomPosition() {
-        int x = Random.Range(-37, 37*3);
-        int z = Random.Range(-37, 37*3);
+        int x = Random.Range(-15, 90);
+        int z = Random.Range(-15, 90);
         return new Vector3(x, 5f, z);
     }
 
@@ -60,6 +70,7 @@ public class Global : MonoBehaviour
         // spawn more food
         if (foodCount < 50) {
             for (int i = 0; i < 10; ++i) {
+                Debug.Log("spawned food");
                 Instantiate(food, RandomPosition(), Quaternion.identity);
             }
         }
