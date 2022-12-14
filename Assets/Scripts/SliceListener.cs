@@ -7,10 +7,27 @@ public class SliceListener : MonoBehaviour
     bool isTouched;
     public GameObject foodHalf;
     public GameObject hand;
+    Global g;
+
+    void Start()
+    {
+        GameObject globalObj = GameObject.Find("GlobalObject");
+        g = globalObj.GetComponent<Global>();
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Food")) {
             isTouched = true;
+
+        }
+
+        if (collider.CompareTag("Heart")) {
+            g.health += 2;
+            if (g.health > 10) g.health = 10;
+            collider.gameObject.SetActive(false);
+            g.heartNum -= 1;
+            Debug.Log(g.health);
 
         }
     }

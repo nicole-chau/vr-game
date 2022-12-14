@@ -13,6 +13,12 @@ public class Global : MonoBehaviour
     public GameObject player;
     public GameObject teleportPlane;
     public GameObject fence;
+    public GameObject heart;
+
+    public float heartTimer;
+    public float heartSpawnPeriod;
+    public int heartNum;
+    public int score;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +26,9 @@ public class Global : MonoBehaviour
         health = 10;
         foodCount = 60f;
         enemyCount = 8;
+        score = 0;
+
+        heartSpawnPeriod = 15;
 
         for(int i = 0; i < foodCount; ++i) {
             Instantiate(food, RandomPosition(), Quaternion.identity);
@@ -56,23 +65,34 @@ public class Global : MonoBehaviour
     Vector3 RandomPosition() {
         int x = Random.Range(-15, 90);
         int z = Random.Range(-15, 90);
-        return new Vector3(x, 5f, z);
+        return new Vector3(x, 1f, z);
     }
+
 
     // Update is called once per frame
     void Update()
     {
         if (health == 0) {
-            Debug.Log("game over");
+            // Debug.Log("game over");
             Application.LoadLevel("GameOver"); 
         }
 
         // spawn more food
         if (foodCount < 50) {
             for (int i = 0; i < 10; ++i) {
-                Debug.Log("spawned food");
+                // Debug.Log("spawned food");
                 Instantiate(food, RandomPosition(), Quaternion.identity);
+                foodCount++;
             }
+        }
+
+        heartTimer += Time.deltaTime;
+
+        if (heartNum <= 5) {
+            Debug.Log("spawning food");
+            heartTimer = 0;
+            Instantiate(heart, RandomPosition(), Quaternion.Euler(-90, 0, 0));
+            heartNum += 1;
         }
     }
 }

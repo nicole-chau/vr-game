@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour{
 
         if (screenFlash.GetComponent<Image>().color.a > 0) {
             var color = screenFlash.GetComponent<Image>().color;
-            Debug.Log(color);
+            // Debug.Log(color);
             color.a -= 0.005f;
             screenFlash.GetComponent<Image>().color = color;
         }
@@ -136,18 +136,21 @@ public class Enemy : MonoBehaviour{
         Debug.Log("collision enter");
         Collider collider = collision.collider;
         if ((collider.CompareTag("Food") || collider.CompareTag("FoodHalf")) && hunger > 0) {
+
             attack_timer = 0;
             if (collider.CompareTag("Food")) {
                 hunger-=1f;
                 g.foodCount--;
+                g.score += 10;
             } else if (collider.CompareTag("FoodHalf")) {
                 hunger-=.5f;
                 g.foodCount-=0.5f;
+                g.score += 5;
             }
             
             GameObject ob = collision.gameObject;
             ob.SetActive(false);
-            Debug.Log(hunger);
+            // Debug.Log(hunger);
         } 
     }
 

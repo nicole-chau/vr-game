@@ -1483,8 +1483,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033185141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.5, z: 0.05}
+  m_LocalPosition: {x: 0, y: 0.476, z: -0}
+  m_LocalScale: {x: 0.03, y: 0.4, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 780943749}
@@ -1899,6 +1899,10 @@ MonoBehaviour:
   player: {fileID: 1123781265}
   teleportPlane: {fileID: 885434641181183652, guid: 5f3cf3744d6539c4f8fd03fa4dcf817a, type: 3}
   fence: {fileID: 102524, guid: da8e893168526164591f81d60c0e06b1, type: 3}
+  heart: {fileID: 751238977941784688, guid: c82a2f6b5ae934744ad3eca2cc9c4bb6, type: 3}
+  heartTimer: 0
+  heartSpawnPeriod: 0
+  heartNum: 0
 --- !u!4 &1434310967
 Transform:
   m_ObjectHideFlags: 0
