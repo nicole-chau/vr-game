@@ -20,6 +20,11 @@ public class Global : MonoBehaviour
     public int heartNum;
     public int score;
 
+
+    void Awake() 
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
