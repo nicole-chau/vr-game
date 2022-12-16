@@ -147,6 +147,8 @@ public class Enemy : MonoBehaviour{
                 g.foodCount-=0.5f;
                 g.score += 5;
             }
+
+            PlayerPrefs.SetInt("score", g.score);
             
             GameObject ob = collision.gameObject;
             ob.SetActive(false);
